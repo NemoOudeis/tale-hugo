@@ -3,11 +3,34 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		{{- if .IsHome }}
 			<meta name="description" content="{{ .Site.Params.Description }}">
+			<meta property="og:description" content="{{ .Site.Params.Description }}" />
 		{{- else if .Description }}
 			<meta name="description" content="{{ .Description }}">
+			<meta property="og:description" content="{{ .Description }}" />
+		{{- else }}
+			<meta name="description" content="{{ .Summary }}">
+			<meta property="og:description" content="{{ .Summary }}" />
 		{{- end }}
 
 		<title>{{- if .IsHome }}{{ .Site.Title }}{{- else }}{{ .Title }} &middot; {{ .Site.Title }}{{- end }}</title>
+		<meta property="og:title" content="{{- if .IsHome }}{{ .Site.Title }}{{- else }}{{ .Page.Title }} &middot; {{ .Site.Title }}{{- end }}" />
+		
+		<meta property="og:url"	content="{{.Permalink}}" />
+		
+		{{- if .IsHome }}
+		<meta property="og:type" content="article" />
+		{{- else }}
+		<meta property="og:type" content="website" />
+		{{- end }}
+
+
+		
+		{{- if (isset .Params "image") }}
+		<meta property="og:image" content="{{ .Params.Image | absURL }}" />
+		{{- else}}
+
+		<meta property="og:image" content="{{ .Site.Params.image | absURL }}" />
+		{{- end}}
 
 		<!-- CSS -->
 		{{- $inServerMode	:= .Site.IsServer }}
